@@ -60,7 +60,7 @@ console.log(`5 !== '6': ${5 !== '6'}`);       // true
 //   : !!false => false
 
 // Q) 컴퓨터하고 홀/짝 게임해보자!
-/*
+
 var random = Math.random();     // 난수 발생(0.0 ~ 1.0)
 random = parseInt(random * 10);
 
@@ -74,7 +74,7 @@ console.log(`LOSE: ${(random % 2 !== 0) && (userSelectedNumber === 1)}`);  // X
 
 console.log(`random: ${random}`);
 console.log(`userSelectedNumber: ${userSelectedNumber}`);
-*/
+
 
 // Q) (10 > -10) && (3.14 > 0) || (-1 == 0)
 //    true && true || false
@@ -116,18 +116,18 @@ console.log(`resultVar: ${resultVar}`);  // 5는 1보다 크다
 
 // Q) 사용자가 시험 점수를 입력하고, 점수가 80이상이면 '합격' 그렇지 않으면 '불합격'을 출력하자!
 
-// var exampleScore = prompt('본인 시험 점수 입력: ');
-// var resultMessage = Number(exampleScore) >= 80 ? '합격' : '불합격';
-// console.log(`resultMessage: ${resultMessage}`);
+var exampleScore = prompt('본인 시험 점수 입력: ');
+var resultMessage = Number(exampleScore) >= 80 ? '합격' : '불합격';
+console.log(`resultMessage: ${resultMessage}`);
 
 
 // 피연산자 && 피연산자  => true && true => true
 // 120cm 이상이고 180cm 미만 탑승가능
-// console.log(`탑승가능 여부: ${height >= 120 && height < 180}`);
+console.log(`탑승가능 여부: ${height >= 120 && height < 180}`);
 
-// var childHeight = prompt('어린이 신장 입력: ');
-// var msg = Number(childHeight) >= 120 && Number(childHeight) < 180 ? '탑승 가능' : '집에가!';
-// console.log(`msg: ${msg}`);
+var childHeight = prompt('어린이 신장 입력: ');
+var msg = Number(childHeight) >= 120 && Number(childHeight) < 180 ? '탑승 가능' : '집에가!';
+console.log(`msg: ${msg}`);
 
 // Q) DW 마트는 수입과 지출을 입력하면 '흑자'인지 '적자'인지 판별하는 프로그램을 도입하려고 합니다.
 //    마트 수익 결과를 알려주는 프로그램을 만들어봅시다.
