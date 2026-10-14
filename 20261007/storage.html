@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WEB STORAGE</title>
+
+    <script>
+        // local storeage
+        // 데이터 저장 (생성)
+        localStorage.setItem("username", "홍길동");
+        localStorage.setItem("userage", "25");
+
+        // 데이터 조회
+        let u_name = localStorage.getItem("username");
+        let u_age = localStorage.getItem("userage");
+        console.log(`u_name : ${u_name} u_age : ${u_age}`);
+
+        // 데이터 수정
+        localStorage.setItem("userage", "30");
+        u_age = localStorage.getItem("userage");
+        console.log(`u_age : ${u_age}`);
+
+        // 데이터 삭제
+        localStorage.removeItem("userage");
+        localStorage.clear();       // all remove
+    </script>
+
+
+</head>
+<body>
+    
+</body>
+</html>

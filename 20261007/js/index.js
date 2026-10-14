@@ -1,0 +1,152 @@
+// 웹문서가 끝까지 완전히 로딩 되면...
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOCUMENT READY!');
+
+    initViews();
+
+    addEvents();
+
+});
+
+// 이벤트 처리(리스너, 핸들러 정의)
+function addEvents() {
+    console.log('addEvents() CALLED!!');
+
+    /* MENU CLICK EVENT START */
+    let signUpMenuBtn = document.querySelector('div.menu_wrap a.sign_up');
+    signUpMenuBtn.addEventListener('click', function() {
+        console.log('signUpMenuBtn CLICKED!!');
+
+        showSelectedView(VIEW_NO.SIGN_UP_VIEW);
+
+    });
+
+    let signInMenuBtn = document.querySelector('div.menu_wrap a.sign_in');
+    signInMenuBtn.addEventListener('click', function() {
+        console.log('signInMenuBtn CLICKED!!');
+
+        showSelectedView(VIEW_NO.SIGN_IN_VIEW);
+        
+    });
+
+    let signOutMenuBtn = document.querySelector('div.menu_wrap a.sign_out');
+    signOutMenuBtn.addEventListener('click', function() {
+        console.log('signOutMenuBtn CLICKED!!');
+
+        // currentSignInedMemberID = '';
+        setCurrentSignInedMemberID();
+
+        setMenuStatus(SIGN_OUT_STATUS);
+        showSelectedView(VIEW_NO.SIGN_OUT_VIEW);
+        
+    });
+
+    let writeMenuBtn = document.querySelector('div.menu_wrap a.write');
+    writeMenuBtn.addEventListener('click', function() {
+        console.log('writeMenuBtn CLICKED!!');
+        
+        showSelectedView(VIEW_NO.DIARY_WRITE_VIEW);
+
+    });
+
+    let listMenuBtn = document.querySelector('div.menu_wrap a.list');
+    listMenuBtn.addEventListener('click', function() {
+        console.log('listMenuBtn CLICKED!!');
+
+        // 호출될때마다 뒤집힘 (reverse)
+        // 전개연산자로 하게되면 원본데이터를 훼손하지 않고 카피본을 떠와서 그 데이터만 리버스 하면 됨
+        let myDiaries = [...searchDiaries(getCurrentSignInedMemberID())].reverse();
+
+        let ulEle = document.querySelector('div.list_wrap > ul');
+        let liEles = '';
+
+        for (let i = 0; i < myDiaries.length; i++) {
+            liEles += `<li>${myDiaries[i]}</li>`;
+        }
+
+        console.log('liEles : ', liEles);
+
+        ulEle.innerHTML = liEles;   // 태그화
+
+        showSelectedView(VIEW_NO.DIARY_LIST_VIEW);
+
+    });
+    /* MENU CLICK EVENT END */
+
+    /* FUNCTION BUTTON CLICK EVENT START */
+    let signUpBtn = document.querySelector('div.sign_up_wrap input[type="button"]');
+    signUpBtn.addEventListener('click', function() {  // 핸들러(SW전반에 용어), 콜백함수(JS)
+        console.log('signUpBtn CLICKED!!');
+
+        let u_id = document.querySelector('div.sign_up_wrap input[name="u_id"]').value;
+        let u_pw = document.querySelector('div.sign_up_wrap input[name="u_pw"]').value;
+        let u_mail = document.querySelector('div.sign_up_wrap input[name="u_mail"]').value;
+
+        addMember(u_id, u_pw, u_mail);
+
+        alert('SIGN-UP SUCCESS!!');
+
+        // document.querySelector('div.sign_up_wrap input[name="u_id"]').value = '';
+        // document.querySelector('div.sign_up_wrap input[name="u_pw"]').value = '';
+        // document.querySelector('div.sign_up_wrap input[name="u_mail"]').value = '';
+
+        doElementValueClean(
+            document.querySelector('div.sign_up_wrap input[name="u_id"]'),
+            document.querySelector('div.sign_up_wrap input[name="u_pw"]'),
+            document.querySelector('div.sign_up_wrap input[name="u_mail"]')
+        );
+
+        showSelectedView(VIEW_NO.SIGN_IN_VIEW);
+
+    });
+
+    let signInBtn = document.querySelector('div.sign_in_wrap input[type="button"]');
+    signInBtn.addEventListener('click', function() {  // 핸들러(SW전반에 용어), 콜백함수(JS)
+        console.log('signInBtn CLICKED!!');
+
+        let u_id = document.querySelector('div.sign_in_wrap input[name="u_id"]').value;
+        let u_pw = document.querySelector('div.sign_in_wrap input[name="u_pw"]').value;
+
+        let signInResult = searchMember(u_id, u_pw);  // true or false
+        if (signInResult) {
+            // currentSignInedMemberID = u_id;
+            setCurrentSignInedMemberID(u_id);
+
+            alert('SIGN-IN SUCCESS!!');
+            showSelectedView(VIEW_NO.HOME_VIEW);
+            setMenuStatus(SIGN_IN_STATUS);
+
+        } else {
+            // currentSignInedMemberID = '';
+            setCurrentSignInedMemberID();
+
+            alert('SIGN-IN FAIL!!');
+            showSelectedView(VIEW_NO.SIGN_IN_VIEW);
+            setMenuStatus(SIGN_OUT_STATUS);
+
+        }
+
+        // document.querySelector('div.sign_in_wrap input[name="u_id"]').value = '';
+        // document.querySelector('div.sign_in_wrap input[name="u_pw"]').value = '';
+
+        doElementValueClean(
+            document.querySelector('div.sign_in_wrap input[name="u_id"]'),
+            document.querySelector('div.sign_in_wrap input[name="u_pw"]')
+        )
+
+    });
+
+    let writeBtn = document.querySelector('div.write_wrap button');
+    writeBtn.addEventListener('click', function() {
+        console.log('writeBtn CLICKED!!');
+
+        let diary = document.querySelector('div.write_wrap input').value;
+        addDiary(diary);
+        alert('DIARY WRITE SUCCESS!!');
+
+        document.querySelector('div.write_wrap input').value = '';
+
+    });
+    /* FUNCTION BUTTON CLICK EVENT END */
+
+}
